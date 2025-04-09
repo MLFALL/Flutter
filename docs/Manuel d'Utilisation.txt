@@ -1,0 +1,296 @@
+# Manuel d'Utilisation - Application de Gestion de Projets Collaboratifs
+
+## Table des Matières
+
+1. [Introduction](#1-introduction)
+2. [Installation](#2-installation)
+3. [Démarrage](#3-démarrage)
+4. [Gestion du Profil](#4-gestion-du-profil)
+5. [Gestion des Projets](#5-gestion-des-projets)
+6. [Gestion des Tâches](#6-gestion-des-tâches)
+7. [Tableau de Bord](#7-tableau-de-bord)
+8. [Communication](#8-communication)
+9. [Gestion des Fichiers](#9-gestion-des-fichiers)
+10. [Paramètres](#10-paramètres)
+11. [Résolution des problèmes](#11-résolution-des-problèmes)
+
+## 1. Introduction
+
+Bienvenue dans l'application de Gestion de Projets Collaboratifs ! Cette application est conçue pour vous aider à gérer efficacement vos projets en équipe. Elle vous permet de créer des projets, d'assigner des tâches à des membres, de suivre l'avancement et de communiquer avec votre équipe.
+
+### Fonctionnalités principales
+
+- Gestion de projets avec tableau Kanban
+- Suivi des tâches et assignation à des membres
+- Système de communication intégré
+- Partage de fichiers
+- Tableau de bord avec statistiques
+- Gestion des utilisateurs et des rôles
+
+## 2. Installation
+
+### Prérequis
+
+- Android 6.0 (Marshmallow) ou plus récent
+- iOS 12.0 ou plus récent
+- Espace de stockage minimal: 100 MB
+- Connexion internet pour la synchronisation des données
+
+### Téléchargement et installation
+
+1. **Pour Android**:
+   - Téléchargez l'application
+   - Suivez les instructions d'installation à l'écran
+
+2. **Pour iOS**:
+   - Téléchargez l'application
+   - Suivez les instructions d'installation à l'écran
+
+## 3. Démarrage
+
+### Création d'un compte
+
+1. Ouvrez l'application
+2. Appuyez sur "Créer un compte"
+3. Remplissez le formulaire avec:
+   - Adresse email professionnelle
+   - Mot de passe (8 caractères minimum avec des lettres, chiffres et caractères spéciaux)
+   - Nom Complet
+4. Appuyez sur "S'inscrire"
+5. Vérifiez votre email et cliquez sur le lien de vérification
+6. Connectez-vous à l'application avec vos identifiants
+
+### Connexion à un compte existant
+
+1. Ouvrez l'application
+2. Entrez votre adresse email et mot de passe
+3. Appuyez sur "Se connecter"
+
+### Récupération de mot de passe
+
+1. Sur l'écran de connexion, appuyez sur "Mot de passe oublié?"
+2. Entrez votre adresse email
+3. Suivez les instructions reçues par email pour réinitialiser votre mot de passe
+
+## 4. Gestion du Profil
+
+### Consulter et modifier votre profil
+
+1. Appuyez sur l'icône de profil dans le menu principal
+2. Visualisez vos informations personnelles
+3. Appuyez sur "Modifier" pour changer:
+   - Photo de profil (appuyez sur l'image pour la modifier)
+   - Nom Complet
+   - Informations de contact
+
+### Paramètres de notification
+
+1. Dans votre profil, appuyez sur "Paramètres"
+2. Sélectionnez "Notifications"
+3. Activez ou désactivez les différents types de notifications:
+   - Notifications de projets
+   - Notifications de tâches
+   - Messages
+   - Rappels d'échéance
+
+## 5. Gestion des Projets
+
+### Créer un nouveau projet
+
+1. Dans l'écran principal, appuyez sur "+" ou "Nouveau projet"
+2. Remplissez le formulaire avec:
+   - Titre du projet
+   - Description
+   - Date de début
+   - Date de fin prévue
+   - Priorité (Basse, Moyenne, Haute, Urgente)
+3. Appuyez sur "Créer le projet"
+
+### Ajouter des membres à un projet
+
+1. Ouvrez le projet
+2. Appuyez sur "Membres" ou l'icône correspondante
+3. Appuyez sur "Ajouter un membre"
+4. Recherchez par adresse email ou nom
+5. Sélectionnez le rôle du membre (administrateur, chef de projet, membre d'équipe)
+6. Appuyez sur "Ajouter"
+
+### Utiliser le tableau Kanban
+
+1. Ouvrez le projet
+2. Appuyez sur l'onglet "Tableau"
+3. Visualisez les colonnes (En attente, En cours, Terminé, Annulé)
+4. Faites glisser les tâches d'une colonne à l'autre pour mettre à jour leur statut
+5. Appuyez longuement sur une tâche pour voir les options supplémentaires
+
+### Filtrer et rechercher des projets
+
+1. Dans l'écran principal, utilisez la barre de recherche en haut
+2. Entrez un mot-clé lié au projet
+3. Utilisez les filtres (icône d'entonnoir) pour affiner:
+   - Par statut
+   - Par date
+   - Par membre
+   - Par priorité
+
+### Consulter les statistiques du projet
+
+1. Ouvrez le projet
+2. Appuyez sur l'onglet "Statistiques"
+3. Visualisez les graphiques interactifs:
+   - Progression globale
+   - Répartition des tâches par statut
+   - Répartition des tâches par membre
+   - Timeline avec jalons
+
+## 6. Gestion des Tâches
+
+### Créer une nouvelle tâche
+
+1. Dans un projet, appuyez sur "+" ou "Nouvelle tâche"
+2. Remplissez le formulaire avec:
+   - Titre de la tâche
+   - Description
+   - Date d'échéance
+   - Priorité (Basse, Moyenne, Haute, Urgente)
+   - Membre(s) assigné(s)
+3. Appuyez sur "Créer la tâche"
+
+### Modifier une tâche
+
+1. Appuyez sur la tâche à modifier
+2. Appuyez sur l'icône "Modifier" (crayon)
+3. Effectuez vos modifications
+4. Appuyez sur "Enregistrer"
+
+### Mettre à jour le statut d'une tâche
+
+1. Méthode 1: Faites glisser la tâche dans la colonne appropriée du tableau Kanban
+2. Méthode 2: Ouvrez la tâche et modifiez le statut dans les détails
+
+### Mettre à jour l'avancement d'une tâche
+
+1. Ouvrez la tâche
+2. Faites glisser le curseur de progression ou entrez un pourcentage
+3. Appuyez sur "Enregistrer"
+
+## 7. Tableau de Bord
+
+### Tableau de bord membre
+
+1. Accédez au tableau de bord depuis le menu principal
+2. Visualisez:
+   - Vos tâches en cours
+   - Calendrier avec échéances
+   - Projets récents
+   - Notifications
+
+### Tableau de bord administrateur
+
+1. Accédez au tableau de bord depuis le menu principal
+2. Visualisez:
+   - Statistiques globales
+   - Nombre de projets par statut
+   - Nombre d'utilisateurs actifs/inactifs
+   - Taux de complétion des projets
+   - Performances des équipes
+
+### Gestion des utilisateurs (administrateur uniquement)
+
+1. Dans le tableau de bord administrateur, appuyez sur "Gestion des utilisateurs"
+2. Visualisez la liste des utilisateurs
+3. Appuyez sur un utilisateur pour:
+   - Voir ses détails
+   - Modifier son rôle
+   - Activer/désactiver son compte
+
+## 8. Communication
+
+### Discuter dans une tâche
+
+1. Ouvrez la tâche
+2. Appuyez sur l'onglet "Discussion"
+3. Entrez votre message dans le champ de texte
+4. Appuyez sur "Envoyer"
+
+### Mentionner un membre
+
+1. Dans la zone de texte, tapez "@" suivi du nom d'un membre
+2. Sélectionnez le membre dans la liste qui apparaît
+3. Complétez votre message
+4. Appuyez sur "Envoyer"
+
+### Consulter les notifications
+
+1. Appuyez sur l'icône de cloche dans la barre supérieure
+2. Visualisez toutes vos notifications
+3. Appuyez sur une notification pour accéder directement à l'élément concerné
+
+## 9. Gestion des Fichiers
+
+### Ajouter un fichier à un projet ou une tâche
+
+1. Ouvrez le projet ou la tâche
+2. Appuyez sur l'onglet "Fichiers"
+3. Appuyez sur "+" ou "Ajouter un fichier"
+4. Choisissez la source:
+   - Galerie
+   - Appareil photo
+   - Documents
+5. Sélectionnez le fichier
+6. Ajoutez une description (optionnel)
+7. Appuyez sur "Télécharger"
+
+### Prévisualiser un fichier
+
+1. Dans la liste des fichiers, appuyez sur le fichier souhaité
+2. Le fichier s'ouvrira en prévisualisation (PDF, image, etc.)
+
+### Télécharger un fichier
+
+1. Dans la liste des fichiers, appuyez sur les trois points à côté du fichier
+2. Sélectionnez "Télécharger"
+3. Le fichier sera enregistré dans votre appareil
+
+## 10. Paramètres
+
+### Gérer les notifications
+
+1. Accédez aux paramètres depuis le menu principal
+2. Appuyez sur "Notifications"
+3. Activez ou désactivez les différentes catégories
+
+### Gérer le stockage
+
+1. Accédez aux paramètres depuis le menu principal
+2. Appuyez sur "Stockage"
+3. Visualisez l'espace utilisé
+4. Appuyez sur "Vider le cache" pour libérer de l'espace
+
+## 11. Résolution des problèmes
+
+### L'application ne répond pas
+
+1. Fermez l'application complètement
+2. Redémarrez-la
+3. Si le problème persiste, redémarrez votre appareil
+
+### Problèmes de synchronisation
+
+1. Vérifiez votre connexion internet
+2. Accédez aux paramètres > "Synchronisation"
+3. Appuyez sur "Synchroniser maintenant"
+
+### Perte de mot de passe
+
+1. Sur l'écran de connexion, appuyez sur "Mot de passe oublié"
+2. Suivez les instructions pour réinitialiser votre mot de passe
+
+### Contacter le support
+
+Pour toute question ou problème technique:
+conctater nous par mail lfallamine26@gmail.com en décrivant tous les détails du problème
+
+---
+
+Nous espérons que cette application vous aidera à gérer efficacement vos projets et à améliorer la collaboration au sein de votre équipe. N'hésitez pas à nous faire part de vos commentaires et suggestions pour améliorer l'application !

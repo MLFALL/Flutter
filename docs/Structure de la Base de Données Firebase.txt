@@ -1,0 +1,623 @@
+# Structure de la Base de Données Firebase
+
+## Table des matières
+
+1. [Introduction](#introduction)
+2. [Modèle de données](#modèle-de-données)
+3. [Collections et documents](#collections-et-documents)
+4. [Relations entre collections](#relations-entre-collections)
+5. [Règles de sécurité](#règles-de-sécurité)
+6. [Indexes](#indexes)
+7. [Bonnes pratiques](#bonnes-pratiques)
+
+## Introduction
+
+Ce document décrit la structure de la base de données Firestore utilisée pour l'application de gestion de projets collaboratifs. Firestore est une base de données NoSQL orientée documents qui permet de stocker et synchroniser des données en temps réel.
+
+## Modèle de données
+
+Le modèle de données est conçu pour optimiser les requêtes fréquentes tout en maintenant une structure logique et extensible. Le modèle comprend les entités principales suivantes:
+
+- Users (Utilisateurs)
+- Projects (Projets)
+- Tasks (Tâches)
+- Comments (Commentaires)
+- Files (Fichiers)
+- Notifications (Notifications)
+
+## Collections et documents
+
+### Collection: `users`
+
+```json
+{
+  'createdAt':8 avril 2025 à 06:06:35 UTC,
+'email':"lfallamine26@gmail.com",
+'fullName':"Admin Default",
+'isEmailVerified':false,
+'lastLogin':
+9 avril 2025 à 06:41:08 UTC
+'photoUrl':"https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+role:"admin"
+status:"active"
+}
+```
+
+### Collection: `projects`
+
+```json
+{
+ completionPercentage
+0
+(chiffre)
+
+
+createdAt
+9 avril 2025 à 04:34:20 UTC
+(code temporel)
+
+
+createdBy
+"Dya6kLwHyqZQdMPSydtV0w1Xw8j2"
+(chaîne)
+
+
+description
+"eyy goo"
+(chaîne)
+
+
+endDate
+9 mai 2025 à 04:34:00 UTC
+(code temporel)
+
+
+
+members
+(tableau)
+
+
+
+0
+(mappage)
+
+
+createdAt
+9 avril 2025 à 04:23:22 UTC
+(code temporel)
+
+
+email
+"mouhamadoulaminefall34@gmail.com"
+(chaîne)
+
+
+fullName
+"Lamine"
+(chaîne)
+
+
+isEmailVerified
+false
+(booléen)
+
+
+lastLogin
+9 avril 2025 à 04:32:21 UTC
+(code temporel)
+
+
+photoUrl
+null
+(nul)
+
+
+role
+"teamMember"
+(chaîne)
+
+
+status
+"active"
+(chaîne)
+
+
+
+1
+(mappage)
+
+
+createdAt
+9 avril 2025 à 04:34:20 UTC
+(code temporel)
+
+
+email
+"lfallamine26@gmail.com"
+(chaîne)
+
+
+fullName
+"Admin Default"
+(chaîne)
+
+
+isEmailVerified
+false
+(booléen)
+
+
+lastLogin
+9 avril 2025 à 04:34:20 UTC
+(code temporel)
+
+
+photoUrl
+"https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+(chaîne)
+
+
+role
+"admin"
+(chaîne)
+
+
+status
+"active"
+(chaîne)
+
+
+priority
+"high"
+(chaîne)
+
+
+startDate
+9 avril 2025 à 04:34:00 UTC
+(code temporel)
+
+
+status
+"pending"
+(chaîne)
+
+
+title
+"jjjj"
+(chaîne)
+
+
+updatedAt
+9 avril 2025 à 04:34:20 UTC
+
+```
+
+### Collection: `tasks`
+
+```json
+{
+  "id": "task123",
+  "projectId": "project123", // ID du projet parent
+  "title": "Nom de la tâche",
+  "description": "Description détaillée de la tâche",
+  "status": "in_progress", // "pending", "in_progress", "completed", "cancelled"
+  "priority": "high", // "low", "medium", "high", "urgent"
+  "createdBy": "user123",
+  "createdAt": Timestamp,
+  "updatedAt": Timestamp,
+  "dueDate": Timestamp,
+  "member": ["user123", "user456"], // IDs des utilisateurs assignés
+  "completionPercentage": 75,
+  "tags": ["design", "frontend"]
+}
+```
+
+### Sous-collection: `tasks/{taskId}/comments`
+
+```json
+{
+  "id": "comment123",
+  "taskId": "task123",
+  "userId": "user123", // ID de l'auteur
+  "content": "Contenu du commentaire",
+  "createdAt": Timestamp,
+  "updatedAt": Timestamp,
+  "mentions": ["user456"] // IDs des utilisateurs mentionnés
+}
+```
+
+### Collection: `files`
+
+```json
+{
+  "id": "file123",
+  "name": "document.pdf",
+  "description": "Description du fichier",
+  "size": 1024000, // Taille en octets
+  "mimeType": "application/pdf",
+  "path": "chemin/vers/fichier.pdf", // Chemin de stockage local
+  "uploadedBy": "user123",
+  "uploadedAt": Timestamp,
+  "parentType": "project", // "project" ou "task"
+  "parentId": "project123", // ID du projet ou de la tâche parent
+  "metadata": {
+    // Métadonnées spécifiques au type de fichier
+  }
+}
+```
+
+### Collection: `notifications`
+
+```json
+{
+  "id": "notification123",
+  "userId": "user123", // Destinataire
+  "type": "task_assigned", // Type de notification
+  "title": "Nouvelle tâche assignée",
+  "content": "Vous avez été assigné à la tâche 'Concevoir l'interface'",
+  "createdAt": Timestamp,
+  "read": false,
+  "data": {
+    "taskId": "task123",
+    "projectId": "project123"
+  }
+}
+```
+
+### Collection: `activities`
+
+```json
+{
+  "id": "activity123",
+  "projectId": "project123",
+  "userId": "user123", // Auteur de l'action
+  "type": "task_created", // Type d'activité
+  "description": "a créé une nouvelle tâche: Concevoir l'interface",
+  "createdAt": Timestamp,
+  "data": {
+    "taskId": "task123"
+  }
+}
+```
+
+## Relations entre collections
+
+### Relation User-Project (Many-to-Many)
+
+- Les projets contiennent un tableau de membres avec les IDs des utilisateurs
+- Les requêtes pour trouver tous les projets d'un utilisateur se font via:
+  ```
+  db.collection('projects').where('members', 'array-contains', {userId: 'user123'})
+  ```
+
+### Relation Project-Task (One-to-Many)
+
+- Les tâches contiennent l'ID du projet parent
+- Les requêtes pour trouver toutes les tâches d'un projet se font via:
+  ```
+  db.collection('tasks').where('projectId', '==', 'project123')
+  ```
+
+### Relation Task-Comment (One-to-Many)
+
+- Les commentaires sont stockés dans une sous-collection de la tâche
+- Accessibles via:
+  ```
+  db.collection('tasks').doc('task123').collection('comments')
+  ```
+
+### Relation User-Notification (One-to-Many)
+
+- Les notifications contiennent l'ID de l'utilisateur destinataire
+- Les requêtes pour trouver toutes les notifications d'un utilisateur se font via:
+  ```
+  db.collection('notifications').where('userId', '==', 'user123')
+  ```
+
+## Règles de sécurité
+
+Les règles Firestore sont configurées pour assurer que seuls les utilisateurs autorisés peuvent accéder aux données:
+
+```
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Règle générale pour tous les documents
+    match /{document=**} {
+      allow read, write: if request.auth != null && (
+        // L'utilisateur doit être authentifié
+        // Soit l'utilisateur est admin
+        isAdmin() ||
+        // Soit c'est son propre document utilisateur
+        document == 'users/' + request.auth.uid ||
+        // Soit il est créateur du projet (ex : projects/{projectId})
+        (resource.data.creatorId == request.auth.uid)
+      );
+    }
+
+    // Fonction helper pour vérifier si l'utilisateur est admin
+    function isAdmin() {
+      return request.auth != null && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Fonction pour vérifier si l'utilisateur fait partie des membres du projet
+    function isProjectMember(projectId) {
+      let project = get(/databases/$(database)/documents/projects/$(projectId));
+      return project.data.members.hasAny([{'userId': request.auth.uid}]);
+    }
+
+    // Fonction pour vérifier si l'utilisateur est le manager du projet
+    function isProjectManager(projectId) {
+      let project = get(/databases/$(database)/documents/projects/$(projectId));
+      // Vérifier si l'utilisateur est dans les membres du projet et a le rôle de project_manager ou admin
+      return project.data.members.hasAny([{'userId': request.auth.uid}]) && (
+        project.data.members[project.data.members.indexOf({'userId': request.auth.uid})].role == 'project_manager' ||
+        project.data.members[project.data.members.indexOf({'userId': request.auth.uid})].role == 'admin'
+      );
+    }
+
+    // Règles pour les utilisateurs
+    match /users/{userId} {
+      allow read: if request.auth != null && (isAdmin() || isOwner(userId));
+      allow create: if request.auth != null && isOwner(userId);
+      allow update: if request.auth != null && (isOwner(userId) || isAdmin());
+      allow delete: if request.auth != null && isAdmin();
+    }
+
+    // Règles pour les projets
+    match /projects/{projectId} {
+      allow read: if request.auth != null && isProjectMember(projectId);
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && isProjectManager(projectId);
+      allow delete: if request.auth != null && isProjectManager(projectId);
+    }
+
+    // Règles pour les tâches
+    match /tasks/{taskId} {
+      allow read: if request.auth != null && isProjectMember(resource.data.projectId);
+      allow create: if request.auth != null && isProjectMember(request.resource.data.projectId);
+      allow update: if request.auth != null && (
+        isProjectManager(resource.data.projectId) ||
+        (isProjectMember(resource.data.projectId) && resource.data.assignees.hasAny([request.auth.uid]))
+      );
+      allow delete: if request.auth != null && isProjectManager(resource.data.projectId);
+      
+      // Règles pour les commentaires
+      match /comments/{commentId} {
+        allow read: if request.auth != null && isProjectMember(get(/databases/$(database)/documents/tasks/$(taskId)).data.projectId);
+        allow create: if request.auth != null && isProjectMember(get(/databases/$(database)/documents/tasks/$(taskId)).data.projectId);
+        allow update, delete: if request.auth != null && (
+          isOwner(resource.data.userId) ||
+          isProjectManager(get(/databases/$(database)/documents/tasks/$(taskId)).data.projectId)
+        );
+      }
+    }
+
+    // Règles pour les fichiers
+    match /files/{fileId} {
+      allow read: if request.auth != null && (
+        (resource.data.parentType == 'project' && isProjectMember(resource.data.parentId)) || 
+        (resource.data.parentType == 'task' && isProjectMember(get(/databases/$(database)/documents/tasks/$(resource.data.parentId)).data.projectId))
+      );
+      allow create: if request.auth != null && (
+        (request.resource.data.parentType == 'project' && isProjectMember(request.resource.data.parentId)) ||
+        (request.resource.data.parentType == 'task' && isProjectMember(get(/databases/$(database)/documents/tasks/$(request.resource.data.parentId)).data.projectId))
+      );
+      allow update, delete: if request.auth != null && (
+        isOwner(resource.data.uploadedBy) ||
+        (resource.data.parentType == 'project' && isProjectManager(resource.data.parentId)) ||
+        (resource.data.parentType == 'task' && isProjectManager(get(/databases/$(database)/documents/tasks/$(resource.data.parentId)).data.projectId))
+      );
+    }
+
+    // Règles pour les notifications
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null && isOwner(resource.data.userId);
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && isOwner(resource.data.userId);
+      allow delete: if request.auth != null && isOwner(resource.data.userId);
+    }
+
+    // Règles pour les activités
+    match /activities/{activityId} {
+      allow read: if request.auth != null && isProjectMember(resource.data.projectId);
+      allow create: if request.auth != null && isProjectMember(resource.data.projectId);
+      allow update, delete: if false; // Les activités sont immuables
+    }
+  }
+}
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Permettre à l'admin d'accéder à tout dans Firebase Storage
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Permettre à chaque utilisateur d'accéder à ses fichiers (ex : profile images)
+    match /profile_images/{userId}/{fileName} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Accès public aux fichiers marqués comme publics
+    match /public/{fileId} {
+      allow read: if true;
+    }
+
+    // Règles pour les fichiers des projets
+    match /project_files/{projectId}/{fileName} {
+      allow read, write: if request.auth != null && (
+        resource.data.creatorId == request.auth.uid || 
+        resource.data.members.hasAny([{'userId': request.auth.uid}]) ||
+        resource.data.teamMembers.hasAny([{'userId': request.auth.uid}])
+      );
+    }
+  }
+}
+
+```
+
+
+## Indexes
+
+Pour optimiser les performances des requêtes, les indexes composés suivants sont créés:
+
+### Collection `projects`
+
+1. Index pour trouver les projets d'un utilisateur par statut:
+   - Champs: `members.userId` (ASC), `status` (ASC), `createdAt` (DESC)
+
+2. Index pour trier les projets par priorité:
+   - Champs: `members.userId` (ASC), `priority` (ASC), `createdAt` (DESC)
+
+### Collection `tasks`
+
+1. Index pour trouver les tâches d'un projet par statut:
+   - Champs: `projectId` (ASC), `status` (ASC), `createdAt` (DESC)
+
+2. Index pour trouver les tâches assignées à un utilisateur dans un projet:
+   - Champs: `projectId` (ASC), `assignees` (ARRAY), `status` (ASC), `dueDate` (ASC)
+
+3. Index pour trouver les tâches assignées à un utilisateur par priorité:
+   - Champs: `assignees` (ARRAY), `priority` (ASC), `dueDate` (ASC)
+
+### Collection `notifications`
+
+1. Index pour trouver les notifications non lues d'un utilisateur:
+   - Champs: `userId` (ASC), `read` (ASC), `createdAt` (DESC)
+
+### Collection `activities`
+
+1. Index pour trouver les activités récentes d'un projet:
+   - Champs: `projectId` (ASC), `createdAt` (DESC)
+
+## Stratégie de stockage des fichiers
+
+```
+
+Cette organisation facilite:
+- L'accès rapide aux fichiers par utilisateur
+- Le nettoyage des fichiers obsolètes
+- La gestion des quotas par utilisateur
+
+## Mécanisme de synchronisation
+
+La synchronisation entre le stockage local et Firebase Firestore s'effectue selon les principes suivants:
+
+1. **Création et modification de données**:
+   - Les données sont d'abord enregistrées localement
+   - Puis synchronisées avec Firestore lorsqu'une connexion est disponible
+
+2. **Lecture de données**:
+   - Priorité donnée aux données locales pour une expérience rapide
+   - Vérification périodique des mises à jour sur Firestore
+
+3. **Conflits**:
+   - Stratégie "Last Write Wins" pour résoudre les conflits
+   - Conservation d'un historique des modifications pour permettre la récupération
+
+## Optimisations de performance
+
+### Pagination
+
+Pour les collections volumineuses, la pagination est implémentée:
+
+```dart
+// Exemple de code pour la pagination
+Query query = FirebaseFirestore.instance
+    .collection('tasks')
+    .where('projectId', isEqualTo: projectId)
+    .orderBy('createdAt', descending: true)
+    .limit(10);
+
+// Pour la page suivante
+DocumentSnapshot lastDoc = querySnapshot.docs.last;
+query = query.startAfterDocument(lastDoc);
+```
+
+### Sous-collections vs Collections
+
+- **Sous-collections**: Utilisées pour les données fortement liées (comme les commentaires d'une tâche)
+- **Collections séparées**: Utilisées pour les données pouvant être requêtées indépendamment
+
+### Dénormalisation
+
+Pour optimiser les requêtes fréquentes, certaines données sont dénormalisées:
+
+- Les noms d'utilisateurs et photos sont stockés dans les objets membres des projets
+- Le pourcentage de complétion est calculé et stocké au niveau du projet
+- Les derniers commentaires peuvent être stockés directement dans les objets tâches
+
+## Bonnes pratiques
+
+### Taille des documents
+
+- Limiter la taille des documents à moins de 1 MB
+- Pour les collections susceptibles de croître indéfiniment (commentaires, activités), utiliser des sous-collections
+
+### Mise à jour atomique
+
+- Utiliser les transactions pour les mises à jour dépendantes
+- Exemple: Lors de la mise à jour du statut d'une tâche, mettre à jour également le pourcentage de complétion du projet
+
+```dart
+FirebaseFirestore.instance.runTransaction((transaction) async {
+  // Mettre à jour la tâche
+  transaction.update(taskRef, {'status': 'completed'});
+  
+  // Récupérer toutes les tâches du projet pour recalculer le pourcentage
+  QuerySnapshot tasksSnapshot = await transaction.get(tasksQuery);
+  int completed = 0;
+  for (var doc in tasksSnapshot.docs) {
+    if (doc.data()['status'] == 'completed') completed++;
+  }
+  
+  // Mettre à jour le projet
+  double percentage = (completed / tasksSnapshot.docs.length) * 100;
+  transaction.update(projectRef, {'completionPercentage': percentage});
+});
+```
+
+### Sauvegardes et exportations
+
+- Programmer des sauvegardes automatiques quotidiennes
+- Permettre l'exportation des données au format JSON ou CSV pour les administrateurs
+
+## Maintenance et monitoring
+
+### Nettoyage des données
+
+- Archivage des projets terminés après une période d'inactivité
+- Suppression des notifications lues après 30 jours
+- Compression des fichiers images volumineux
+
+### Monitoring des performances
+
+- Utilisation de Firebase Performance Monitoring pour suivre:
+  - Temps de chargement des données
+  - Taux de succès des opérations
+  - Utilisation des quotas
+
+### Correction des erreurs
+
+- Utilisation de Firebase Crashlytics pour détecter et corriger les problèmes
+- Journalisation des opérations critiques pour faciliter le débogage
+
+## Évolution future
+
+La structure de la base de données a été conçue pour évoluer facilement:
+
+1. **Fonctionnalités planifiées**:
+   - Support pour les étiquettes personnalisées
+   - Système de modèles de projets
+   - Intégration avec des calendriers externes
+
+2. **Migrations**:
+   - Scripts de migration pour les mises à jour de schéma
+   - Versionnage des structures de données
+
+Cette documentation fournit une vue d'ensemble complète de la structure de base de données Firebase utilisée pour l'application de gestion de projets collaboratifs. Elle servira de référence pour le développement et la maintenance de l'application.

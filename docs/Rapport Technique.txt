@@ -1,0 +1,181 @@
+# Rapport Technique - Projet Flutter de Gestion de Projets Collaboratifs
+
+## 1. Architecture et Conception
+
+### 1.1 Architecture globale
+
+L'application a été conçue selon une architecture MVVM (Model-View-ViewModel) adaptée à Flutter et optimisée pour l'utilisation de GetX comme gestionnaire d'état. Cette architecture permet une séparation claire des préoccupations et facilite la maintenance et l'évolution du code.
+
+L'architecture se compose des couches suivantes:
+- **View (Vue)**: Screens et Widgets (UI)
+- **Controller/ViewModel**: GetX Controllers
+- **Model (Modèle)**: Classes de données et Repository
+- **Services**: Gestion de Firebase, Stockage local, etc.
+
+```
+app/
+├── config/         # Configuration globale (thèmes, constantes, routes)
+├── models/         # Classes de données
+├── controllers/    # GetX Controllers 
+├── screens/        # Écrans de l'application
+├── services/       # Services (Firebase, authentification, stockage)
+├── utils/          # Utilitaires et helpers
+├── widgets/        # Widgets réutilisables
+└── main.dart       # Point d'entrée de l'application
+```
+
+### 1.2 Choix de GetX comme gestionnaire d'état
+
+GetX a été choisi pour ses nombreux avantages:
+
+- **Gestion d'état simple et réactive**: Mise à jour sélective des widgets lorsque les données changent
+- **Injection de dépendances intégrée**: Facilite la gestion des instances de classes
+- **Gestion de routes simplifiée**: Navigation fluide entre les écrans
+- **Gestionnaire de mémoire intégré**: Optimisation des ressources
+- **Moins de code boilerplate**: Meilleure lisibilité et maintenance
+
+Exemple de Controller GetX:
+```dart
+class ProjectController extends GetxController {
+  final RxList<Project> projects = <Project>[].obs;
+  final RxBool isLoading = false.obs;
+  
+  final FirebaseService _firebaseService = Get.find<FirebaseService>();
+  
+  @override
+  void onInit() {
+    super.onInit();
+    fetchProjects();
+  }
+  
+  Future<void> fetchProjects() async {
+    isLoading.value = true;
+    try {
+      projects.value = await _firebaseService.getProjects();
+    } catch (e) {
+      Get.snackbar('Erreur', 'Impossible de charger les projets');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+}
+```
+
+### 1.3 Gestion du stockage
+
+Pour le stockage des fichiers et images, nous avons opté pour un stockage local pour les raisons suivantes:
+
+- **Performance**: Accès rapide aux fichiers fréquemment utilisés
+- **Économie de bande passante**: Moins de transferts réseau
+- **Fonctionnement hors ligne**: L'application reste fonctionnelle sans connexion internet
+
+Le stockage local est géré via le package `path_provider` et `sqflite`:
+- Les fichiers binaires sont stockés dans le répertoire de l'application
+- Les métadonnées et références sont stockées dans une base SQLite locale
+- Une synchronisation avec Firebase est effectuée lorsque la connexion est disponible
+
+### 1.4 Firebase comme Backend
+
+Firebase a été choisi comme backend pour ses nombreux avantages:
+
+- **Firebase Authentication**: Système d'authentification sécurisé et évolutif
+- **Cloud Firestore**: Base de données NoSQL scalable avec synchronisation en temps réel
+- **Règles de sécurité**: Contrôle d'accès granulaire aux données
+- **Intégration native**: Excellente compatibilité avec Flutter
+
+### 1.5 Structure de code
+
+La structure du code suit les principes SOLID:
+
+- **Single Responsibility Principle**: Chaque classe a une responsabilité unique
+- **Open/Closed Principle**: Le code est ouvert à l'extension mais fermé à la modification
+- **Liskov Substitution Principle**: Les sous-types peuvent remplacer les types parents
+- **Interface Segregation Principle**: Interfaces spécifiques plutôt que génériques
+- **Dependency Inversion Principle**: Dépendance vers des abstractions, non des implémentations
+
+## 2. Choix techniques spécifiques
+
+### 2.1 UI/UX
+
+- **Flutter Material Design 3**: Design system moderne et cohérent
+- **Responsive Design**: Adaptation à différentes tailles d'écran via Media Queries et LayoutBuilder
+- **Thèmes personnalisables**: Support des thèmes clair/sombre avec possibilité d'extension
+- **Animations**: Utilisation d'animations pour améliorer l'expérience utilisateur
+- **Accessibilité**: Contraste adéquat, taille de texte ajustable, support des lecteurs d'écran
+
+### 2.2 Authentification
+
+L'authentification est gérée par Firebase Authentication avec plusieurs niveaux de sécurité:
+
+- **Email/Password**: Authentification classique
+- **Vérification d'email**: Prévention des comptes factices
+- **Récupération de mot de passe**: Processus sécurisé
+
+
+### 2.3 Système de notification
+
+Le système de notification utilise une combinaison de:
+
+- **Notifications locales**: Pour les rappels et événements planifiés localement
+- **Notifications push** (Bonus): Via Firebase Cloud Messaging pour les mises à jour importantes
+
+### 2.4 Sécurité des données
+
+La sécurité est assurée à plusieurs niveaux:
+
+- **Authentification**: Vérification des identités
+- **Règles Firestore**: Contrôle d'accès déclaratif
+- **Chiffrement**: Données sensibles chiffrées avant stockage
+- **Validation des données**: Contrôles côté client et serveur
+- **Gestion des rôles**: Différents niveaux d'accès selon le rôle de l'utilisateur
+
+### 2.5 Performance
+
+Plusieurs techniques sont utilisées pour optimiser les performances:
+
+- **Lazy loading**: Chargement différé des données non visibles
+- **Pagination**: Chargement par lots des listes longues
+- **Mise en cache**: Stockage local des données fréquemment utilisées
+- **Compression d'images**: Réduction de la taille des fichiers avant transfert
+- **Optimisation des requêtes**: Requêtes composées et indexes Firebase
+
+## 3. Tests et Assurance Qualité
+
+### 3.1 Tests unitaires
+
+Tests unitaires couvrant:
+- Modèles de données
+- Logique métier
+- Services
+
+### 3.2 Tests d'intégration
+
+Tests d'intégration pour:
+- Interactions avec Firebase
+- Flux d'authentification
+- Gestion de projets et tâches
+
+### 3.3 Tests d'interface utilisateur
+
+Tests d'interface utilisateur pour:
+- Rendu correct des écrans
+- Interactions utilisateur
+- Scénarios d'utilisation typiques
+
+
+## 5. Conclusion et perspectives d'évolution
+
+L'application a été conçue pour être évolutive et facilement maintenable. Les prochaines étapes pourraient inclure:
+
+- **Internationalisation**: Support de plusieurs langues
+- **Mode hors ligne amélioré**: Synchronisation intelligente des données
+- **Intégration avec des services tiers**: Calendriers, outils de communication, etc.
+- **Analyse de données avancée**: Statistiques et prédictions pour les projets
+- **Version web**: Extension vers une plateforme web complète
+
+## 6. Bibliographie
+
+- Documentation Flutter: https://flutter.dev/docs
+- Documentation GetX: https://pub.dev/packages/get
+- Documentation Firebase: https://firebase.google.com/docs
+- Design Patterns en Flutter: "Flutter Design Patterns and Best Practices" par Simone Alessandria
