@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "957464103967",
+    "project_id": "fall-202e1",
+    "storage_bucket": "fall-202e1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957464103967:android:64f7b7c3941a617a3f192a",
+        "android_client_info": {
+          "package_name": "sn.isi.fall_mouhamadoulamine_l3gl_examen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNG40QAOojIII0WD4IpCEeWa1cZCmnguI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
