@@ -123,7 +123,7 @@ class FirebaseService {
     }
   }
 
-  /// Met à jour le statut actif de l'utilisateur
+  /// Met à jour le statut actif de L'utilisateur
   Future<void> updateUserActiveStatus(String userId, bool isActive) async {
     try {
       // Accéder au document utilisateur dans Firestore et mettre à jour le champ 'isActive'
